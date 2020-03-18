@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 
-if v:version >= 800
+if exists('*vundle#begin')
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 
