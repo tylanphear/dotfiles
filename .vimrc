@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 
-if exists('*vundle#begin')
+if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 
