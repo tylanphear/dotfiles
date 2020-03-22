@@ -8,7 +8,7 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     Plugin 'VundleVim/Vundle.vim'
     Plugin 'tpope/vim-fugitive'
     Plugin 'wincent/command-t'
-    Plugin 'vim-scripts/a.vim'
+    Plugin 'micbou/a.vim'
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'rdnetto/YCM-Generator'
 
