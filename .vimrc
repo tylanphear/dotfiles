@@ -7,6 +7,7 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
 
     Plugin 'VundleVim/Vundle.vim'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'tpope/vim-rhubarb'
     Plugin 'wincent/command-t'
     Plugin 'micbou/a.vim'
     Plugin 'Valloric/YouCompleteMe'
@@ -16,6 +17,8 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
 
     " Remap man lookup to something useful
     nnoremap K :YcmCompleter GoToDefinition<CR>
+    " Prevent this accidentally being triggered in visual mode
+    vnoremap K <NOP>
 
     let g:ycm_global_ycm_extra_conf = "$HOME/.ycm_extra_conf.py"
     let g:ycm_confirm_extra_conf = 0
