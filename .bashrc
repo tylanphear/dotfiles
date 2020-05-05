@@ -204,6 +204,15 @@ alias killmy='killall -9 -u $USER'
 alias st='stty sane -ixon'
 alias ls='ls --color=auto'
 
+# Miscellanea
+if [[ -d "${HOME}/bash_completion.d/" ]]; then
+    mapfile -d $'\0' scripts -t < <(find "${HOME}/bash_completion.d/" -maxdepth 1 -type f -print0)
+    for script in "${scripts[@]}"; do
+        source "$script"
+    done
+    unset scripts
+fi
+
 ### Key Bindings
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
