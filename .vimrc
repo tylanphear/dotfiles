@@ -5,20 +5,29 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 
+    Plugin 'Glench/Vim-Jinja2-Syntax'
+    Plugin 'Valloric/YouCompleteMe'
     Plugin 'VundleVim/Vundle.vim'
+    Plugin 'micbou/a.vim'
+    Plugin 'rdnetto/YCM-Generator'
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-rhubarb'
     Plugin 'wincent/command-t'
-    Plugin 'micbou/a.vim'
-    Plugin 'Valloric/YouCompleteMe'
-    Plugin 'rdnetto/YCM-Generator'
 
     call vundle#end()
 
     " Remap man lookup to something useful
     nnoremap K :YcmCompleter GoToDefinition<CR>
+    nnoremap <Leader>r :YcmCompleter GoToReferences<CR>
+    nnoremap <Leader>R :YcmCompleter RefactorRename 
+    nnoremap <Leader>f :YcmCompleter FixIt<CR>
+    nmap <Leader>D <Plug>(YCMHover)
     " Prevent this accidentally being triggered in visual mode
     vnoremap K <NOP>
+
+    let g:github_enterprise_urls = ['https://git.vectors.com']
+
+    let g:ycm_auto_hover = ''
 
     let g:ycm_global_ycm_extra_conf = "$HOME/.ycm_extra_conf.py"
     let g:ycm_confirm_extra_conf = 0
@@ -32,6 +41,9 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     let g:ycm_min_num_of_chars_for_completion = 4
     let g:ycm_enable_diagnostic_highlighting = 0
     let g:ycm_always_populate_location_list = 1
+
+    let g:ycm_max_diagnostics_to_display = 100
+    let g:ycm_disable_for_files_larger_than_kb = 4000
 
     let g:CommandTFileScanner = 'git'
 
@@ -52,7 +64,6 @@ if has("terminal")
     set termwinsize=0*2000
 
     nnoremap ,r :term rg --no-heading 
-    nnoremap ,f :term fd 
 endif
 
 " Make bell shut up
