@@ -1,0 +1,21 @@
+[user]
+	email = tyler.lanphear@vector.com
+        name = Tyler Lanphear
+
+[color]
+        ui = auto
+
+[diff]
+	tool = vimdiff
+[alias]
+	lo = log --oneline
+        cna = commit --no-edit --amend
+	conflicts = diff --name-only --diff-filter=U
+[status]
+	showuntrackedfiles = no
+[core]
+	editor = nvim
+[push]
+	default = current
+[http]
+	sslVerify = false
