@@ -1,6 +1,3 @@
-let g:python_host_prog = '/usr/local/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
-
 call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -46,22 +43,6 @@ function! s:titlecase(additional_exceptions) range
 endfunction
 
 command! -nargs=* -range TitleCase <line1>,<line2>call <SID>titlecase([<f-args>])
-
-" Add `gnatls` and `ada_language_server` to path
-let $PATH="/home/BUILD64/bin/gcc-8.3.0-glibc-2.17/bin:" . $PATH
-let $PATH="/home/Users/tla/ada_lsp/:" . $PATH
-call coc#config("languageserver", {
-   \    "als": {
-   \        "command": "ada_language_server",
-   \        "filetypes": ["ada"],
-   \        "settings": {
-   \            "ada": {
-   \                "projectFile": "/home/PUBLIC/tla/vcast.gpr",
-   \                "scenarioVariables": {}
-   \            }
-   \        }
-   \    }
-   \})
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -202,55 +183,6 @@ augroup Jinja
     autocmd BufNewFile,BufRead *.html.template,*.txt.template set ft=jinja
     autocmd FileType jinja setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
 augroup END
-
-let g:vector_campaign_dir='python/vector/testsuite/test_campaigns/'
-function! g:GetLevel()
-    let l:path = expand('%:r')
-    let l:level = substitute(path, g:vector_campaign_dir, '', '')
-    " Not in campaign dir
-    if level ==# path
-        return ""
-    endif
-    let l:func_line = search('^    def .*', 'bcnW')
-    if func_line > 0
-        let l:line = getline(func_line)
-        let l:test = substitute(line, '^\s*def \(\%(test\|pre\|post\).*\)(self):\s*$', '\1', '')
-        if test !=# line
-            let l:level .= "/" . test
-        endif
-    endif
-    return level
-endfunction
-
-function! s:VtestComplete(ArgLead, CmdLine, CursorPos)
-    let l:args = a:CmdLine
-    let l:has_equal_sign = match(l:args, "=") != -1
-    if l:has_equal_sign
-        let l:args = substitute(l:args, '--level=', '--level ', '')
-    endif
-    let l:ends_with_space = match(l:args, " $") != -1
-    let l:argc = len(split(l:args)) - 1 + (l:ends_with_space ? 1 : 0)
-    let l:completions = systemlist("_vtest_complete_args ".l:argc." ".l:args)
-    if l:has_equal_sign
-        let l:completions = map(l:completions, '"--level=".v:val')
-    endif
-    return l:completions
-endfunction
-
-command! -nargs=+ -complete=customlist,s:VtestComplete Vtest call <SID>Exec('vtest', <f-args>)
-nmap <expr> ,v ":Vtest --level " . GetLevel()
-
-function! s:OpenTest(test)
-    let l:levels = split(a:test, '/')
-    if len(l:levels) < 3
-        return
-    endif
-    execute "split " . systemlist('suite_py ' . a:test)[0]
-    if len(l:levels) == 4
-        execute "/" . l:levels[-1]
-    endif
-endfunction
-command! -nargs=1 -complete=customlist,s:VtestComplete OpenTest call <SID>OpenTest(<f-args>)
 
 command! -nargs=+ -complete=file Rg call <SID>Exec('rg', '--color=always', '--vimgrep', <f-args>)
 nnoremap ,r :Rg 
