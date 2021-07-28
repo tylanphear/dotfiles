@@ -1,16 +1,25 @@
-PLATFORM="$(uname -s)"
+if [[ $- != *l* ]]; then
+    # Source .profile if it hasn't been (in non-login shells)
+    source "${HOME}/.profile"
+fi
+
+export PLATFORM="$(uname -s)"
 export SERVER="$(hostname | cut -d'.' -f1)"
 ### Prompt stuff {
 
 function nonzero_return() {
-    [[ $? -eq 0 ]] || echo "(X)"
+    case $? in
+        0  ) ;;
+        148) echo -e "\e[1;33m(&)\e[m" ;;
+        *  ) echo -e "\e[1;31m(X)\e[m" ;;
+    esac
 }
 export -f nonzero_return
 
 _TIME="\A"
-_USER="\[\e[32m\]\u@\h\[\e[m\]"
-_DIR="\[\e[33m\]\w\[\e[m\]"
-_E_CODE="\[\e[31m\]\`nonzero_return\`\[\e[m\]"
+_USER="\[\e[0;32m\]\u@\h\[\e[m\]"
+_DIR="\[\e[0;33m\]\w\[\e[m\]"
+_E_CODE="\$(nonzero_return)"
 export PS1="\n$_USER ($_TIME) $_DIR $_E_CODE\n\$ "
 
 ## }
