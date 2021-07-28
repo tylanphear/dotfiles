@@ -110,6 +110,10 @@ if [[ -d "${HOME}/bash_completion.d/" ]]; then
     unset scripts
 fi
 
+if [[ -f "${HOME}/.site/bashrc" ]]; then
+    source "${HOME}/.site/bashrc"
+fi
+
 ### Key Bindings
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
