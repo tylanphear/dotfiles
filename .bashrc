@@ -99,6 +99,7 @@ alias my='ps u -u $USER'
 alias killmy='killall -9 -u $USER'
 alias st='stty sane -ixon'
 alias ls='ls --color=auto'
+alias vim='nvim'
 
 # Miscellanea
 if [[ -d "${HOME}/bash_completion.d/" ]]; then
