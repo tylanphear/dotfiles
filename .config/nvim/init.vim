@@ -225,7 +225,7 @@ set laststatus=2
 
 " Encoding stuff... fun
 set encoding=utf-8
-set fileencodings=latin1,utf-8,sjis
+set fileencodings=utf-8,latin1,sjis
 set fileformats=unix,dos,mac
 
 " No highlighting when searching
