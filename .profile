@@ -69,12 +69,3 @@ if has xset && ! xset -q >/dev/null; then
     unset ans tty_settings
     trap - INT
 fi
-
-stty -ixon
-
-if has tmux; then
-    if [ -z "$TMUX" ]; then
-        tmux attach-session -t "$USER" || tmux new-session -s "$USER"
-        exit
-    fi
-fi
