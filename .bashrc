@@ -5,6 +5,7 @@ fi
 
 export PLATFORM="$(uname -s)"
 export SERVER="$(hostname | cut -d'.' -f1)"
+
 ### Prompt stuff {
 
 function nonzero_return() {
@@ -16,11 +17,22 @@ function nonzero_return() {
 }
 export -f nonzero_return
 
-_TIME="\A"
-_USER="\[\e[0;32m\]\u@\h\[\e[m\]"
-_DIR="\[\e[0;33m\]\w\[\e[m\]"
-_E_CODE="\$(nonzero_return)"
-export PS1="\n$_USER ($_TIME) $_DIR $_E_CODE\n\$ "
+function num_jobs() {
+    if [[ "$1" -gt 0 ]]; then
+        echo "[$1]"
+    fi
+}
+export -f num_jobs
+
+function get_ps1() {
+    local TIME="\A"
+    local USER="\[\e[0;32m\]\u@\h\[\e[m\]"
+    local DIR="\[\e[0;33m\]\w\[\e[m\]"
+    local JOBS="\$(num_jobs \j)"
+    local E_CODE="\$(nonzero_return)"
+    echo "\n$USER ($TIME) $DIR $E_CODE $JOBS\n\$ "
+}
+export PS1="$(get_ps1)"
 
 ## }
 
