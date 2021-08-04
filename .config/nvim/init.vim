@@ -58,8 +58,7 @@ function! s:show_documentation()
 endfunction
 
 function! s:Exec(...) abort
-    new
-    execute "term " . join(a:000)
+    execute 'split term://'.join(a:000)
 endfunction
 command! -nargs=+ -complete=shellcmd Exec call <SID>Exec(<f-args>)
 
