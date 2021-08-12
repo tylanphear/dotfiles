@@ -58,7 +58,9 @@ function! s:show_documentation()
 endfunction
 
 function! s:Exec(...) abort
-    execute 'split term://'.join(a:000)
+    let l:args = map(copy(a:000), {_, arg -> expand(escape(arg, '\'))})
+    new!
+    exec 'terminal ' . join(l:args)
 endfunction
 command! -nargs=+ -complete=shellcmd Exec call <SID>Exec(<f-args>)
 
