@@ -134,10 +134,6 @@ if [[ -d "${HOME}/bash_completion.d/" ]]; then
     unset scripts
 fi
 
-if [[ -f "${HOME}/.site/bashrc" ]]; then
-    source "${HOME}/.site/bashrc"
-fi
-
 if [ -t 1 ]; then
     # Disable <C-s> suspend to allow forward i-search
     stty start undef stop undef
@@ -148,3 +144,7 @@ shopt -s checkwinsize
 
 EDITOR="$(command -v vim)"; export EDITOR
 VISUAL="$(command -v vim)"; export VISUAL
+
+if [[ -f "${HOME}/.site/bashrc" ]]; then
+    source "${HOME}/.site/bashrc"
+fi
