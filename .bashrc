@@ -16,33 +16,20 @@ function is_cygwin_or_mingw() {
 
 ### Prompt stuff {
 
-function nonzero_return() {
-    case $? in
-        0  ) ;;
-        148) echo -e "\e[1;33m(&)\e[m" ;;
-        *  ) echo -e "\e[1;31m(X)\e[m" ;;
+PROMPT_COMMAND='make_prompt'
+function make_prompt() {
+    case "$?" in
+        0)       local E_CODE="";;
+        148|146) local E_CODE="\[\e[1;33m(&)\e[m\]";;
+        *)       local E_CODE="\[\e[1;31m(X)\e[m\]";;
     esac
-}
-export -f nonzero_return
-
-function num_jobs() {
-    if [[ "$1" -gt 0 ]]; then
-        echo "[$1]"
-    fi
-}
-export -f num_jobs
-
-function get_ps1() {
+    local JOBS="$(jobs -p | wc -l)"
+    (( JOBS > 0 )) || JOBS=""
     local TIME="\A"
     local USER="\[\e[0;32m\]\u@\h\[\e[m\]"
     local DIR="\[\e[0;33m\]\w\[\e[m\]"
-    if ! is_cygwin_or_mingw; then
-        local JOBS="\$(num_jobs \j)"
-        local E_CODE="\$(nonzero_return)"
-    fi
-    echo "\n$USER ($TIME) $DIR $E_CODE $JOBS\n\$ "
+    export PS1="\n$USER ($TIME) $DIR${E_CODE:+ $E_CODE}${JOBS:+ [$JOBS]}\n\$ "
 }
-export PS1="$(get_ps1)"
 
 ## }
 
