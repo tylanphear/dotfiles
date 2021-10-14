@@ -138,14 +138,13 @@ if [[ -f "${HOME}/.site/bashrc" ]]; then
     source "${HOME}/.site/bashrc"
 fi
 
-### Key Bindings
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
+if [ -t 1 ]; then
+    # Disable <C-s> suspend to allow forward i-search
+    stty start undef stop undef
+fi
 
 # Fix up arrow screwing up terminal history
 shopt -s checkwinsize
-# Disable <C-s> suspend to allow forward i-search
-stty start undef stop undef
 
 EDITOR="$(command -v vim)"; export EDITOR
 VISUAL="$(command -v vim)"; export VISUAL
