@@ -145,6 +145,8 @@ shopt -s checkwinsize
 EDITOR="$(command -v vim)"; export EDITOR
 VISUAL="$(command -v vim)"; export VISUAL
 
+add_to_path "$HOME/.local/bin"
+
 if [[ -f "${HOME}/.site/bashrc" ]]; then
     source "${HOME}/.site/bashrc"
 fi
