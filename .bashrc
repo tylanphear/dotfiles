@@ -6,6 +6,14 @@ fi
 export PLATFORM="$(uname -s)"
 export SERVER="$(hostname | cut -d'.' -f1)"
 
+function is_cygwin_or_mingw() {
+    case "$PLATFORM" in
+        MINGW*)  true ;;
+        CYGWIN*) true ;;
+        *)       false ;;
+    esac
+}
+
 ### Prompt stuff {
 
 function nonzero_return() {
@@ -28,8 +36,10 @@ function get_ps1() {
     local TIME="\A"
     local USER="\[\e[0;32m\]\u@\h\[\e[m\]"
     local DIR="\[\e[0;33m\]\w\[\e[m\]"
-    local JOBS="\$(num_jobs \j)"
-    local E_CODE="\$(nonzero_return)"
+    if ! is_cygwin_or_mingw; then
+        local JOBS="\$(num_jobs \j)"
+        local E_CODE="\$(nonzero_return)"
+    fi
     echo "\n$USER ($TIME) $DIR $E_CODE $JOBS\n\$ "
 }
 export PS1="$(get_ps1)"
