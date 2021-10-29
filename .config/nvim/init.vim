@@ -19,6 +19,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'micbou/a.vim'
+Plug 'tylanphear/stanza.vim'
 
 call plug#end()
 
