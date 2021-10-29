@@ -1,3 +1,10 @@
+" If vim-plug is not installed, install it, run `PlugInstall` and re-source
+let vim_plug_path = stdpath('data').'/site/autoload/plug.vim'
+if empty(glob(vim_plug_path))
+    silent execute '!curl -fLo '.vim_plug_path.' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'Glench/Vim-Jinja2-Syntax'
