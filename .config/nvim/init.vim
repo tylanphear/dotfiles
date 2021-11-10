@@ -159,38 +159,55 @@ endfunction
 command! HighlightSpaces call <SID>HighlightSpaces()
 command! NoHighlightSpaces match none
 
+function! s:PrintSynStack()
+    echo map(synstack(line("."), col(".")), {_, val -> synIDattr(val, "name")})
+endfunction
+map <Leader>D :call <SID>PrintSynStack()<CR>
+
 augroup Term
     autocmd!
     autocmd TermOpen * setlocal nonumber statusline=%#StatusFile#%f%* nohidden scrollback=100000
     autocmd TermOpen * normal! G
+augroup END
 augroup make
 " Make needs tabs
     autocmd!
     autocmd FileType make setlocal tabstop=8 shiftwidth=8 softtabstop=0 noexpandtab
+augroup END
 augroup Diff
 " Highlight trailing space in diffs
     autocmd!
     autocmd FileType diff HighlightSpaces
+augroup END
 augroup Ada
     autocmd!
     autocmd FileType ada setlocal tabstop=3 softtabstop=3 shiftwidth=3 expandtab autoindent smarttab
+augroup END
 augroup Cpp
     autocmd!
     autocmd FileType c,cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
+augroup END
 augroup Python
     autocmd!
     autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
     autocmd FileType python nnoremap <buffer> <C-H> :split %:r.md<CR>
+augroup END
 augroup Markdown
     autocmd!
     autocmd FileType markdown nnoremap <buffer> <C-H> :split %:r.py<CR>
+augroup END
 augroup YAML
     autocmd!
     autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
+augroup END
 augroup Jinja
     autocmd!
     autocmd BufNewFile,BufRead *.html.template,*.txt.template set ft=jinja
     autocmd FileType jinja setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
+augroup END
+augroup Stanza
+    autocmd!
+    autocmd FileType stanza setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
 augroup END
 
 command! -nargs=+ -complete=file Rg call <SID>Exec('rg', '--color=always', '--vimgrep', <f-args>)
