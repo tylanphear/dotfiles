@@ -2,8 +2,8 @@
 
 To install on a new system
 ```sh
-alias dotfiles='git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
-echo ".dotfiles" >> .gitignore
+alias dotfiles='git --git-dir="\$HOME/.dotfiles/" --work-tree="\$HOME"'
+echo ".dotfiles" >> "$HOME/.gitignore"
 git clone --bare git@github.com:tylanphear/dotfiles "$HOME/.dotfiles"
 ```
 
