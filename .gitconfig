@@ -11,6 +11,7 @@
 	lo = log --oneline
         cna = commit --no-edit --amend
 	conflicts = diff --name-only --diff-filter=U
+        pushfl = push --force-with-lease
 [status]
 	showuntrackedfiles = no
 [core]
