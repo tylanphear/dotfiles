@@ -52,6 +52,12 @@ endfunction
 
 command! -nargs=* -range TitleCase <line1>,<line2>call <SID>titlecase([<f-args>])
 
+function! s:PrintSynStack()
+    echo map(synstack(line('.'), col('.')), {_, id -> synIDattr(id, "name")})
+endfunction
+
+nnoremap <silent> <Leader>D :call <SID>PrintSynStack()<CR>
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -96,7 +102,6 @@ xmap     <silent> <Leader>f <Plug>(coc-format-selected)
 nnoremap <silent> <Leader>t :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>d :call <SID>show_documentation()<CR>
-nnoremap <silent> <C-h>     :AS<CR>
 nnoremap <silent> ,b        :Build<CR>
 nnoremap <silent> ,cb       :BuildClean<CR>
 imap     <silent> <C-l>     <Plug>(coc-snippets-expand)
@@ -186,6 +191,7 @@ augroup END
 augroup Cpp
     autocmd!
     autocmd FileType c,cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
+    autocmd FileType c,cpp nnoremap <silent> <buffer> <C-h>     :AS<CR>
 augroup END
 augroup Python
     autocmd!
@@ -208,6 +214,9 @@ augroup END
 augroup Stanza
     autocmd!
     autocmd FileType stanza setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
+    autocmd FileType stanza nmap <silent> <buffer> <C-k> <Plug>(stanza-up-indent)
+    autocmd FileType stanza nmap <silent> <buffer> <C-j> <Plug>(stanza-down-indent)
+    autocmd FileType stanza nnoremap <silent> <buffer> <C-h> :split %:p:h/stanza.proj<CR>
 augroup END
 
 command! -nargs=+ -complete=file Rg call <SID>Exec('rg', '--color=always', '--vimgrep', <f-args>)
