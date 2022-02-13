@@ -129,11 +129,15 @@ fi
 # Fix up arrow screwing up terminal history
 shopt -s checkwinsize
 
-EDITOR="$(command -v vim)"; export EDITOR
-VISUAL="$(command -v vim)"; export VISUAL
-
 add_to_path "$HOME/.local/bin"
 
 if [[ -f "${HOME}/.site/bashrc" ]]; then
     source "${HOME}/.site/bashrc"
 fi
+
+if command -v nvim >/dev/null; then
+    alias vim=$(command -v nvim)
+fi
+
+export EDITOR="$(command -v vim)"
+export VISUAL="$(command -v vim)"
