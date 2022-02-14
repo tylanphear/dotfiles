@@ -268,3 +268,6 @@ set nohlsearch
 
 " + register is system clipboard
 set clipboard+=unnamedplus
+
+" Local .nvimrc files
+set exrc
