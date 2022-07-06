@@ -14,12 +14,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-abolish'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'micbou/a.vim'
-Plug 'tylanphear/stanza.vim'
+Plug 'rhysd/vim-llvm'
 
 call plug#end()
 
@@ -53,7 +51,8 @@ endfunction
 command! -nargs=* -range TitleCase <line1>,<line2>call <SID>titlecase([<f-args>])
 
 function! s:PrintSynStack()
-    echo map(synstack(line('.'), col('.')), {_, id -> synIDattr(id, "name")})
+    echo map(synstack(line('.'), col('.')),
+                \ {_, id -> synIDattr(id, 'name')})
 endfunction
 
 nnoremap <silent> <Leader>D :call <SID>PrintSynStack()<CR>
@@ -72,7 +71,7 @@ function! s:show_documentation()
 endfunction
 
 function! s:Exec(...) abort
-    let l:args = map(copy(a:000), {_, arg -> expand(escape(arg, '\'))})
+    let l:args = map(copy(a:000), {_, arg -> expand(escape(arg, '*\'))})
     new!
     exec 'terminal ' . join(l:args)
 endfunction
@@ -96,15 +95,21 @@ nmap     <silent> <Leader>r <Plug>(coc-references)
 nmap     <silent> <Leader>R <Plug>(coc-rename)
 nmap     <silent> <Leader>a <Plug>(coc-codeaction)
 nmap     <silent> <Leader>f <Plug>(coc-fix-current)
-nmap     <silent> g[        <Plug>(coc-diagnostic-prev)
-nmap     <silent> g]        <Plug>(coc-diagnostic-next)
+nmap     <silent> g[        <Plug>(coc-diagnostic-prev-error)
+nmap     <silent> g]        <Plug>(coc-diagnostic-next-error)
 xmap     <silent> <Leader>f <Plug>(coc-format-selected)
-nnoremap <silent> <Leader>t :Files<CR>
-nnoremap <silent> <Leader>b :Buffers<CR>
-nnoremap <silent> <Leader>d :call <SID>show_documentation()<CR>
+nnoremap <silent> <Leader>t <CMD>Files<CR>
+nnoremap <silent> <Leader>b <CMD>Buffers<CR>
+nnoremap <silent> <Leader>d <CMD>call <SID>show_documentation()<CR>
 nnoremap <silent> ,b        :Build<CR>
 nnoremap <silent> ,cb       :BuildClean<CR>
 imap     <silent> <C-l>     <Plug>(coc-snippets-expand)
+nmap     <silent> <C-s>     <Plug>(coc-range-select)
+xmap     <silent> <C-s>     <Plug>(coc-range-select)
+
+" Copy to clipboard on right click in visual mode
+vnoremap <silent> <RightMouse> "+y
+
 " Prevent this accidentally being triggered in visual mode
 vnoremap          K         <NOP>
 
@@ -171,7 +176,7 @@ map <Leader>D :call <SID>PrintSynStack()<CR>
 
 augroup Term
     autocmd!
-    autocmd TermOpen * setlocal nonumber statusline=%#StatusFile#%f%* nohidden scrollback=100000
+    autocmd TermOpen * setlocal nonumber statusline=%#StatusFile#%f%* scrollback=100000 bufhidden=delete nobuflisted
     autocmd TermOpen * normal! G
 augroup END
 augroup make
@@ -191,7 +196,6 @@ augroup END
 augroup Cpp
     autocmd!
     autocmd FileType c,cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
-    autocmd FileType c,cpp nnoremap <silent> <buffer> <C-h>     :AS<CR>
 augroup END
 augroup Python
     autocmd!
@@ -234,6 +238,7 @@ set hidden
 
 " Better response time
 set updatetime=300
+
 " Don't give completion menu messages
 set shortmess+=c
 
@@ -271,3 +276,8 @@ set clipboard+=unnamedplus
 
 " Local .nvimrc files
 set exrc
+
+" Make mouse do something useful
+if has('mouse')
+    set mouse=a
+endif
