@@ -88,6 +88,16 @@ endfunction
 command! -nargs=* BuildClean call <SID>BuildClean(<f-args>)
 
 let g:coc_snippet_next = '<tab>'
+let g:coc_default_semantic_highlight_groups = 1
+hi! def link CocSemClass Type
+hi! def link CocSemStruct Type
+hi! def link CocSemTypeParameter Type
+hi! def link CocSemEnum Type
+hi! def link CocSemVariable NONE
+hi! CocSemParameter ctermfg=lightcyan
+hi! CocSemProperty ctermfg=white
+hi! CocSemNamespace ctermfg=yellow
+
 let g:alternativeNoDefaultAlternate = 1
 
 nmap     <silent> K         <Plug>(coc-definition)
@@ -106,6 +116,7 @@ nnoremap <silent> ,cb       :BuildClean<CR>
 imap     <silent> <C-l>     <Plug>(coc-snippets-expand)
 nmap     <silent> <C-s>     <Plug>(coc-range-select)
 xmap     <silent> <C-s>     <Plug>(coc-range-select)
+nnoremap <silent> <C-h>     <Cmd>CocCommand clangd.switchSourceHeader<CR>
 
 " Copy to clipboard on right click in visual mode
 vnoremap <silent> <RightMouse> "+y
