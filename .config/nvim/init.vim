@@ -116,7 +116,7 @@ nnoremap <silent> ,cb       :BuildClean<CR>
 imap     <silent> <C-l>     <Plug>(coc-snippets-expand)
 nmap     <silent> <C-s>     <Plug>(coc-range-select)
 xmap     <silent> <C-s>     <Plug>(coc-range-select)
-nnoremap <silent> <C-h>     <Cmd>CocCommand clangd.switchSourceHeader<CR>
+nnoremap <silent> <Leader>h <Cmd>CocCommand clangd.switchSourceHeader<CR>
 
 " Copy to clipboard on right click in visual mode
 vnoremap <silent> <RightMouse> "+y
@@ -125,16 +125,11 @@ vnoremap <silent> <RightMouse> "+y
 vnoremap          K         <NOP>
 
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ coc#pum#visible() ? coc#pum#next(1):
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-if exists('*complete_info')
-  inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+inoremap <expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>"
 
 let fzf_action = {'ctrl-s': 'split'}
 
@@ -211,11 +206,6 @@ augroup END
 augroup Python
     autocmd!
     autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
-    autocmd FileType python nnoremap <buffer> <C-H> :split %:r.md<CR>
-augroup END
-augroup Markdown
-    autocmd!
-    autocmd FileType markdown nnoremap <buffer> <C-H> :split %:r.py<CR>
 augroup END
 augroup YAML
     autocmd!
@@ -226,12 +216,10 @@ augroup Jinja
     autocmd BufNewFile,BufRead *.html.template,*.txt.template set ft=jinja
     autocmd FileType jinja setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
 augroup END
-augroup Stanza
+augroup Asm
     autocmd!
-    autocmd FileType stanza setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
-    autocmd FileType stanza nmap <silent> <buffer> <C-k> <Plug>(stanza-up-indent)
-    autocmd FileType stanza nmap <silent> <buffer> <C-j> <Plug>(stanza-down-indent)
-    autocmd FileType stanza nnoremap <silent> <buffer> <C-h> :split %:p:h/stanza.proj<CR>
+    autocmd FileType asm setlocal softtabstop=0 shiftwidth=8 tabstop=8 noexpandtab
+    autocmd FileType asm setlocal hlsearch
 augroup END
 
 command! -nargs=+ -complete=file Rg call <SID>Exec('rg', '--color=always', '--vimgrep', <f-args>)

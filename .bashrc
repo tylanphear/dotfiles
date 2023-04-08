@@ -1,3 +1,5 @@
+[[ $- == *i* ]] || return
+
 if [[ $- != *l* ]]; then
     # Source .profile if it hasn't been (in non-login shells)
     source "${HOME}/.profile"
@@ -130,8 +132,8 @@ fi
 shopt -s checkwinsize
 
 # Awful and weird hack to avoid escaping '$' in completions (e.g. 'ls $FOO<TAB>' becoming 'ls \$FOO')
-if [[ -v _filedir ]] && grep -q 'compopt -o filenames 2>' < <(type -a _filedir); then
-    eval $(type -a _filedir | tail -n +2 | sed 's/compopt -o filenames 2>/compopt -o filenames -o noquote 2>/')
+if type -a _filedir >/dev/null 2>&1 && grep -q 'compopt -o filenames 2>' < <(type -a _filedir); then
+    eval "$(type -a _filedir | tail -n +2 | sed 's/compopt -o filenames 2>/compopt -o filenames -o noquote 2>/')"
 fi
 
 add_to_path "$HOME/.local/bin"

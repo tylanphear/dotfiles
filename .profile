@@ -1,3 +1,5 @@
+[[ $- == *i* ]] || return
+
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 if [ -n "$BASH_VERSION" ]; then
