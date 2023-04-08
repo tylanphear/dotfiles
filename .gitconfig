@@ -12,6 +12,7 @@
         cna = commit --no-edit --amend
 	conflicts = diff --name-only --diff-filter=U
         pushfl = push --force-with-lease
+        wip = commit -am'!WIP!'
 [status]
 	showuntrackedfiles = no
 [core]
