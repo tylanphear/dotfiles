@@ -116,7 +116,6 @@ nnoremap <silent> ,cb       :BuildClean<CR>
 imap     <silent> <C-l>     <Plug>(coc-snippets-expand)
 nmap     <silent> <C-s>     <Plug>(coc-range-select)
 xmap     <silent> <C-s>     <Plug>(coc-range-select)
-nnoremap <silent> <Leader>h <Cmd>CocCommand clangd.switchSourceHeader<CR>
 
 " Copy to clipboard on right click in visual mode
 vnoremap <silent> <RightMouse> "+y
@@ -202,6 +201,7 @@ augroup END
 augroup Cpp
     autocmd!
     autocmd FileType c,cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
+    autocmd FileType c,cpp nnoremap <silent> <Leader>h <Cmd>CocCommand clangd.switchSourceHeader<CR>
 augroup END
 augroup Python
     autocmd!
