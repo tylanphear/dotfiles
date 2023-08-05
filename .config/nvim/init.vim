@@ -103,11 +103,13 @@ let g:alternativeNoDefaultAlternate = 1
 nmap     <silent> K         <Plug>(coc-definition)
 nmap     <silent> <Leader>r <Plug>(coc-references)
 nmap     <silent> <Leader>R <Plug>(coc-rename)
-nmap     <silent> <Leader>a <Plug>(coc-codeaction)
+nmap     <silent> <Leader>a <Plug>(coc-codeaction-cursor)
+nmap     <silent> <Leader>A <Plug>(coc-codeaction)
 nmap     <silent> <Leader>f <Plug>(coc-fix-current)
 nmap     <silent> g[        <Plug>(coc-diagnostic-prev-error)
 nmap     <silent> g]        <Plug>(coc-diagnostic-next-error)
 xmap     <silent> <Leader>f <Plug>(coc-format-selected)
+xmap     <silent> <Leader>a <Plug>(coc-codeaction-selected)
 nnoremap <silent> <Leader>t <CMD>Files<CR>
 nnoremap <silent> <Leader>b <CMD>Buffers<CR>
 nnoremap <silent> <Leader>d <CMD>call <SID>show_documentation()<CR>
