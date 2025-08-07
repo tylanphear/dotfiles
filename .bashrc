@@ -25,7 +25,8 @@ function make_prompt() {
         148|146) local E_CODE="\[\e[1;33m(&)\e[m\]";;
         *)       local E_CODE="\[\e[1;31m(X)\e[m\]";;
     esac
-    local JOBS="$(jobs -p | wc -l)"
+    # weird + 0 trick needed for MacOS `wc` which adds leading spaces to its output
+    local JOBS="$(($(jobs -p | wc -l) + 0))"
     (( JOBS > 0 )) || JOBS=""
     local TIME="\A"
     local USER="\[\e[0;32m\]\u@\h\[\e[m\]"
