@@ -1,4 +1,8 @@
-[ "$-" == *i* ] || return
+# Bailout on non-interactive shells
+case "$-" in
+    *i*) ;;
+    *) return ;;
+esac
 
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
