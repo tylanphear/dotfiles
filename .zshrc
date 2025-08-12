@@ -16,8 +16,8 @@ function make_prompt() {
     local JOBS="$(($(jobs -p | wc -l) + 0))"
     (( JOBS > 0 )) || JOBS=""
     local TIME="%T"
-    local USER="%{%F{green}%}%n@%m%f"
-    local DIR="%{%F{yellow}%}%d%f"
+    local USER="%F{green}%n@%m%f"
+    local DIR="%F{yellow}%d%f"
     local NL=$'\n'
     export PS1="${NL}$USER ($TIME) $DIR${E_CODE:+ $E_CODE}${JOBS:+ [$JOBS]}${NL}\$ "
 }
