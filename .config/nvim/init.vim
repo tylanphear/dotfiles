@@ -18,6 +18,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'rhysd/vim-llvm'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
