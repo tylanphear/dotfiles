@@ -71,10 +71,13 @@ function! s:show_documentation()
   endif
 endfunction
 
-function! s:Exec(...) abort
-    let l:args = map(copy(a:000), {_, arg -> expand(escape(arg, '*\'))})
+function! g:ExecCmd(args) abort
+    let l:args = map(copy(a:args), {_, arg -> expand(escape(arg, '*\'))})
     new!
     exec 'terminal ' . join(l:args)
+endfunction
+function! s:Exec(...) abort
+    call g:ExecCmd(a:000)
 endfunction
 command! -nargs=+ -complete=shellcmd Exec call <SID>Exec(<f-args>)
 
