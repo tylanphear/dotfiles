@@ -91,18 +91,19 @@ function! s:BuildClean(...)
 endfunction
 command! -nargs=* BuildClean call <SID>BuildClean(<f-args>)
 
-let g:coc_snippet_next = '<tab>'
-let g:coc_default_semantic_highlight_groups = 1
-hi! def link CocSemClass Type
-hi! def link CocSemStruct Type
-hi! def link CocSemTypeParameter Type
-hi! def link CocSemEnum Type
-hi! def link CocSemVariable NONE
-hi! CocSemParameter ctermfg=lightcyan
-hi! CocSemProperty ctermfg=white
-hi! CocSemNamespace ctermfg=yellow
+" Needed to revert back to the original VIM colorscheme
+colorscheme vim
 
-let g:alternativeNoDefaultAlternate = 1
+let g:coc_snippet_next = '<tab>'
+hi! def link CocSemTypeClass Type
+hi! def link CocSemTypeStruct Type
+hi! def link CocSemTypeTypeParameter Type
+hi! def link CocSemTypeEnum Type
+hi! def link CocSemTypeEnumMember Constant
+hi! def link CocSemTypeOperator NONE
+hi! def link CocSemTypeVariable NONE
+hi! CocSemTypeParameter ctermfg=lightcyan guifg=lightcyan
+hi! CocSemTypeProperty ctermfg=white guifg=white gui=bold
 
 nmap     <silent> K         <Plug>(coc-definition)
 nmap     <silent> <Leader>r <Plug>(coc-references)
@@ -208,10 +209,19 @@ augroup Cpp
     autocmd!
     autocmd FileType c,cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smarttab
     autocmd FileType c,cpp nnoremap <silent> <Leader>h <Cmd>CocCommand clangd.switchSourceHeader<CR>
+    autocmd FileType c,cpp hi! CocSemTypeNamespace ctermfg=yellow guifg=yellow
 augroup END
 augroup Python
     autocmd!
     autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent smarttab
+    autocmd FileType python hi def link CocSemTypeNamespace Identifier
+    autocmd FileType python hi def link CocSemTypeKeyword NONE
+    autocmd FileType python syn keyword pythonTrue True
+    autocmd FileType python syn keyword pythonFalse False
+    autocmd FileType python syn keyword pythonNone None
+    autocmd FileType python hi def link pythonTrue Constant
+    autocmd FileType python hi def link pythonFalse Constant
+    autocmd FileType python hi def link pythonNone Constant
 augroup END
 augroup YAML
     autocmd!
